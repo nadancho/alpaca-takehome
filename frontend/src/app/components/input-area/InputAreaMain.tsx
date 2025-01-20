@@ -15,12 +15,14 @@ export default function InputAreaMain() {
         setUserInput(event.target.value);
     };
 
+    //Sumit taken notes to open AI through server-side function
     const handleSubmit = async () => {
         try {
-            //Make a server call to generate the initial note data, parse & read
             const response = await generateInitialNote(userInput);
-            console.log('Obtained Response: ', response);
 
+            // console.log('Obtained Response: ', response);
+
+            //formatting the response before displaying to user.
             const formattedSections = formatGeneratedNote(
                 response.generated_note
             );
@@ -34,26 +36,27 @@ export default function InputAreaMain() {
         const paragraphs = note.split('\n\n'); // Split into paragraphs
         const formattedParagraphs: string[] = [];
 
+        /**
+         * Iterate through the paragraphcs written out by ChatGPT and separat them with formatting for view.
+         */
         paragraphs.forEach((paragraph) => {
             const lines = paragraph.split('\n');
             const formattedLines: string[] = [];
 
             lines.forEach((line) => {
-                // Check if the entire line is bold
                 if (/^\*\*.*\*\*$/.test(line)) {
                     formattedLines.push(
                         `<strong>${line.slice(2, -2)}</strong>`
-                    ); // Remove outer ** and wrap in <strong>
+                    );
                 } else {
-                    // Process individual words for bold formatting
                     formattedLines.push(
                         line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                     );
                 }
             });
 
-            // Join the formatted lines back into a paragraph
-            formattedParagraphs.push(formattedLines.join('<br />')); // Use <br /> for line breaks within paragraphs
+            // Using <br /> for line breaks within paragraphs as HTML
+            formattedParagraphs.push(formattedLines.join('<br />'));
         });
 
         return formattedParagraphs;
