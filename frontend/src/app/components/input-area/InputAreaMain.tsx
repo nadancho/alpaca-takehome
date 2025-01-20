@@ -27,13 +27,7 @@ export default function InputAreaMain() {
         setIsLoading(true);
         try {
             const response = await generateInitialNote(userInput);
-<<<<<<< HEAD
             // console.log('Obtained Response: ', response);
-=======
-
-            // console.log('Obtained Response: ', response);
-
->>>>>>> 952eba9 (unit tests to backend)
             //formatting the response before displaying to user.
             const formattedSections = formatGeneratedNote(
                 response.generated_note
@@ -46,39 +40,6 @@ export default function InputAreaMain() {
         }
     };
 
-<<<<<<< HEAD
-=======
-    const formatGeneratedNote = (note: string): string[] => {
-        const paragraphs = note.split('\n\n'); // Split into paragraphs
-        const formattedParagraphs: string[] = [];
-
-        /**
-         * Iterate through the paragraphcs written out by ChatGPT and separat them with formatting for view.
-         */
-        paragraphs.forEach((paragraph) => {
-            const lines = paragraph.split('\n');
-            const formattedLines: string[] = [];
-
-            lines.forEach((line) => {
-                if (/^\*\*.*\*\*$/.test(line)) {
-                    formattedLines.push(
-                        `<strong>${line.slice(2, -2)}</strong>`
-                    );
-                } else {
-                    formattedLines.push(
-                        line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                    );
-                }
-            });
-
-            // Using <br /> for line breaks within paragraphs as HTML
-            formattedParagraphs.push(formattedLines.join('<br />'));
-        });
-
-        return formattedParagraphs;
-    };
-
->>>>>>> 952eba9 (unit tests to backend)
     const handleEditClick = () => {
         setIsEditing(true);
     };
